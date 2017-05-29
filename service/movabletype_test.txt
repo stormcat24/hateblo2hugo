@@ -1,0 +1,67 @@
+AUTHOR: a-yamada
+TITLE: Protocol BuffersのIDL（.protoファイル）をvendoringするツールを書いた
+BASENAME: protogen
+STATUS: Publish
+ALLOW COMMENTS: 0
+CONVERT BREAKS: 0
+DATE: 06/08/2017 14:05:00
+CATEGORY: gRPC
+CATEGORY: Microservices
+CATEGORY: Protocol Buffers
+-----
+BODY:
+<p>.protoファイルの管理方法に思いを馳せていたので書いた。</p>
+
+<p><iframe src="//hatenablog-parts.com/embed?url=https%3A%2F%2Fgithub.com%2Fstormcat24%2Fprotodep" title="stormcat24/protodep" class="embed-card embed-webcard" scrolling="no" frameborder="0" style="display: block; width: 100%; height: 155px; max-width: 500px; margin: 10px 0px;"></iframe><cite class="hatena-citation"><a href="https://github.com/stormcat24/protodep">github.com</a></cite></p>
+
+<h3>動機</h3>
+
+<p><a href="https://freshlive.tv/">FRESH!</a>はMicroservices<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%A2%A1%BC%A5%AD%A5%C6%A5%AF%A5%C1%A5%E3">アーキテクチャ</a>でやっているが、今まさに<a class="keyword" href="http://d.hatena.ne.jp/keyword/API">API</a> v2というのが動いていて構成の刷新に動いている。技術的なトピックとしては</p>
+
+<ul>
+<li><a class="keyword" href="http://d.hatena.ne.jp/keyword/iOS">iOS</a>/<a class="keyword" href="http://d.hatena.ne.jp/keyword/Android">Android</a>から<a class="keyword" href="http://d.hatena.ne.jp/keyword/API">API</a>への通信をフルgRPC化</li>
+<li>Service Meshの導入</li>
+<li><a class="keyword" href="http://d.hatena.ne.jp/keyword/Amazon">Amazon</a> ECS -> Kubernetes化</li>
+</ul>
+
+
+<p>といったところで本格的に動きはじめている。</p>
+
+<p>1つのRepositoryに1サービスという構成で作っているので、それぞれにgRPCのインタフェースを用意し、Service MeshでよしなにRoutingやDiscoveryしていく感じ。サービス毎にgRPC/Protocol Buffersのインタフェース定義のIDL（.protoファイル）を配置していく。</p>
+
+<h3>.proto群をかき集めたい</h3>
+
+<p><a class="keyword" href="http://d.hatena.ne.jp/keyword/iOS">iOS</a>や<a class="keyword" href="http://d.hatena.ne.jp/keyword/Android">Android</a>はもちろんMicroservices間の通信もそうなのだが、様々なサービスのIDLを利用してサービスにアクセスするためのプログラムを <code>protoc</code> を使って自動生成していく。クライアントによって必要なサービスも違うし、参照しているバージョンも異なる。何よりも、<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%EA%A5%DD%A5%B8%A5%C8%A5%EA">リポジトリ</a>が散らばっているので、それを毎度各クライアントの<a class="keyword" href="http://d.hatena.ne.jp/keyword/%A5%EA%A5%DD%A5%B8%A5%C8%A5%EA">リポジトリ</a>にコピーしてきたりして管理するのもなかなかダルい。</p>
+
+<p>というわけで必要なIDLを定義して、それを一気に解決するようなツールが欲しくなったので書いたのが今回のprotodepである。</p>
+
+<p>使い方は以下のように、protodep.tomlという依存関係を定義したtomlを用意する。</p>
+
+<pre class="code lang-ruby" data-lang="ruby" data-unlink>proto_outdir = <span class="synSpecial">&quot;</span><span class="synConstant">./proto</span><span class="synSpecial">&quot;</span>
+
+[[dependencies]]
+  target = <span class="synSpecial">&quot;</span><span class="synConstant">github.com/openfresh/plasma/protobuf</span><span class="synSpecial">&quot;</span>
+  branch = <span class="synSpecial">&quot;</span><span class="synConstant">master</span><span class="synSpecial">&quot;</span>
+
+[[dependencies]]
+  target = <span class="synSpecial">&quot;</span><span class="synConstant">github.com/grpc-ecosystem/grpc-gateway/examples/examplepb</span><span class="synSpecial">&quot;</span>
+  revision = <span class="synSpecial">&quot;</span><span class="synConstant">v1.2.2</span><span class="synSpecial">&quot;</span>
+</pre>
+
+
+<p>あとはprotodepを実行する。</p>
+
+<pre class="code" data-lang="" data-unlink>$ protodep up</pre>
+
+
+<p>protodepでprotoを取得したら、vendoringツールにありがちなlockファイルができる（protodep.lock）。これでバージョン固定可能。</p>
+
+<p><b>-fオプション</b>を付ければforce updateも可能</p>
+
+<pre class="code" data-lang="" data-unlink>$ protodep up -f</pre>
+
+
+<p>protodepはあくまでIDLを必要なところからかき集めるだけのツールなので、取得したIDLを使ってのstubの生成はセルフサービスでお願いします。</p>
+
+-----
+--------
