@@ -4,6 +4,7 @@
 package service
 
 import (
+	movabletype "github.com/catatsuy/movabletype"
 	gomock "github.com/golang/mock/gomock"
 )
 
@@ -28,4 +29,17 @@ func NewMockMovableType(ctrl *gomock.Controller) *MockMovableType {
 // EXPECT returns an object that allows the caller to indicate expected use
 func (_m *MockMovableType) EXPECT() *MockMovableTypeMockRecorder {
 	return _m.recorder
+}
+
+// Parse mocks base method
+func (_m *MockMovableType) Parse(path string) ([]*movabletype.Entry, error) {
+	ret := _m.ctrl.Call(_m, "Parse", path)
+	ret0, _ := ret[0].([]*movabletype.Entry)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Parse indicates an expected call of Parse
+func (_mr *MockMovableTypeMockRecorder) Parse(arg0 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Parse", arg0)
 }
