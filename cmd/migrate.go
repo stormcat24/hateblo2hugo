@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 
@@ -60,7 +59,6 @@ var migrateCmd = &cobra.Command{
 		}
 
 		for _, entry := range entries {
-			fmt.Printf("%s\n", entry.Basename)
 			ts := service.NewTransform(entry, outputTarget)
 			ts.Execute()
 		}

@@ -3,8 +3,9 @@ package hugo
 import (
 	"bufio"
 	"bytes"
-	"html/template"
+	"fmt"
 	"strings"
+	"text/template"
 
 	"github.com/catatsuy/movabletype"
 )
@@ -24,17 +25,22 @@ type HugoPage struct {
 	Date    string
 	Draft   bool
 	Title   string
-	Tags    StringSlice
+	Tags    []string
 	Content string
 }
 
 func CreateHugoPage(entry *movabletype.Entry) HugoPage {
 
+	tags := make([]string, len(entry.Category))
+	for i, s := range entry.Category {
+		tags[i] = fmt.Sprintf(`"%s"`, s)
+	}
+
 	return HugoPage{
 		Date:    entry.Date.String(),
 		Draft:   entry.Status != "Publish",
 		Title:   entry.Title,
-		Tags:    StringSlice{entry.Category},
+		Tags:    tags,
 		Content: entry.Body,
 	}
 }
