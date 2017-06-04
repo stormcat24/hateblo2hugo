@@ -3,7 +3,9 @@ package cmd
 import (
 	"os"
 	"path/filepath"
+	"strings"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"github.com/stormcat24/hateblo2hugo/service"
@@ -59,8 +61,28 @@ var migrateCmd = &cobra.Command{
 		}
 
 		for _, entry := range entries {
-			ts := service.NewTransform(entry, outputTarget)
-			ts.Execute()
+
+			sr := strings.NewReader(entry.Body)
+			doc, err := goquery.NewDocumentFromReader(sr)
+			if err != nil {
+				return err
+			}
+
+			transformer := service.NewChainTransformer(doc)
+			if err := transformer.Transform(); err != nil {
+				return err
+			}
+
+			newHtml, err := doc.Find("body").Html()
+			if err != nil {
+				return err
+			}
+			entry.Body = newHtml
+
+			ts := service.NewMigration(entry, outputTarget)
+			if err := ts.Execute(); err != nil {
+				return err
+			}
 		}
 
 		return nil
