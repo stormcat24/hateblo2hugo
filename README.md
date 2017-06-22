@@ -1,7 +1,7 @@
 hateblo2hugo
 =======
 
-[![Circle CI](https://circleci.com/gh/stormcat24/protodep.svg?style=shield&circle-token=f53432c65ac4fd4bd4b8b778892690e4032ea141)](https://circleci.com/gh/stormcat24/protodep)
+[![Circle CI](https://circleci.com/gh/stormcat24/protodep.svg?style=shield&circle-token=388632f89f829c91445405176f51c11bd066e3d5)](https://circleci.com/gh/stormcat24/protodep)
 [![Language](https://img.shields.io/badge/language-go-brightgreen.svg?style=flat)](https://golang.org/)
 [![issues](https://img.shields.io/github/issues/stormcat24/hateblo2hugo.svg?style=flat)](https://github.com/stormcat24/hateblo2hugo/issues?state=open)
 [![License: MIT](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
