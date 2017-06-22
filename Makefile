@@ -17,7 +17,7 @@ deps-update: deps-build
 		dep ensure -update
 
 build:
-		go build -ldflags="-w -s" -o bin/protodep main.go
+		go build -ldflags="-w -s" -o bin/$(APP) main.go
 
 test: $(TARGET_SERIAL_PACKAGES)
 
