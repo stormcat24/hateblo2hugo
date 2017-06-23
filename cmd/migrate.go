@@ -68,7 +68,7 @@ var migrateCmd = &cobra.Command{
 				return err
 			}
 
-			transformer := service.NewChainTransformer(doc)
+			transformer := service.NewTransformer(doc)
 			if err := transformer.Transform(); err != nil {
 				return err
 			}
