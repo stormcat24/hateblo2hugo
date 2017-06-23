@@ -34,6 +34,7 @@ func NewTransformer(doc *goquery.Document) Transformer {
 			&HatenaKeywordTransformer{doc},
 			&HatenaPhotolifeTransformer{doc},
 			&TweetTransformer{doc},
+			&SpeakerdeckTransformer{doc},
 		},
 	}
 }
