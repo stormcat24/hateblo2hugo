@@ -9,6 +9,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"github.com/stormcat24/hateblo2hugo/service"
+	"github.com/stormcat24/hateblo2hugo/transformer"
 )
 
 var migrateCmd = &cobra.Command{
@@ -68,8 +69,8 @@ var migrateCmd = &cobra.Command{
 				return err
 			}
 
-			transformer := service.NewTransformer(doc)
-			if err := transformer.Transform(); err != nil {
+			tf := transformer.NewTransformer(doc)
+			if err := tf.Transform(); err != nil {
 				return err
 			}
 
