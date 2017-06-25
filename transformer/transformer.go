@@ -4,6 +4,7 @@ import (
 	"reflect"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/catatsuy/movabletype"
 	"github.com/pkg/errors"
 )
 
@@ -26,7 +27,7 @@ func (t *ChainTransformer) Transform() error {
 	return nil
 }
 
-func NewTransformer(doc *goquery.Document) Transformer {
+func NewTransformer(doc *goquery.Document, entry *movabletype.Entry, outputImageRoot string, updateImage bool) Transformer {
 
 	return &ChainTransformer{
 		transformers: []Transformer{
@@ -34,7 +35,7 @@ func NewTransformer(doc *goquery.Document) Transformer {
 			&TypefaceTransformer{doc},
 			&HeadingTransformer{doc},
 			&ParagraphTransformer{doc},
-			&HatenaPhotolifeTransformer{doc},
+			&HatenaPhotolifeTransformer{doc, entry, outputImageRoot, updateImage},
 			&TweetTransformer{doc},
 			&SpeakerdeckTransformer{doc},
 		},
