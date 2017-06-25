@@ -30,10 +30,10 @@ func NewTransformer(doc *goquery.Document) Transformer {
 
 	return &ChainTransformer{
 		transformers: []Transformer{
-			&EmptyParagraphTransformer{doc},
-			&HeadingTransformer{doc},
-			&TypefaceTransformer{doc},
 			&HatenaKeywordTransformer{doc},
+			&TypefaceTransformer{doc},
+			&HeadingTransformer{doc},
+			&ParagraphTransformer{doc},
 			&HatenaPhotolifeTransformer{doc},
 			&TweetTransformer{doc},
 			&SpeakerdeckTransformer{doc},
