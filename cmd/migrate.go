@@ -78,6 +78,9 @@ var migrateCmd = &cobra.Command{
 			if err != nil {
 				return err
 			}
+			newHtml = strings.Replace(newHtml, "{{&lt;", "{{<", -1)
+			newHtml = strings.Replace(newHtml, "&gt;}}", ">}}", -1)
+
 			entry.Body = newHtml
 
 			ts := service.NewMigration(entry, outputTarget)
