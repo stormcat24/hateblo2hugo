@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -23,6 +24,11 @@ var migrateCmd = &cobra.Command{
 		}
 
 		outputPath, err := cmd.Flags().GetString("output-path")
+		if err != nil {
+			return err
+		}
+
+		updateImage, err := cmd.Flags().GetBool("update-image")
 		if err != nil {
 			return err
 		}
@@ -61,6 +67,8 @@ var migrateCmd = &cobra.Command{
 			return err
 		}
 
+		outputImageRoot := fmt.Sprintf("%s/static/images", outputTarget)
+
 		for _, entry := range entries {
 
 			sr := strings.NewReader(entry.Body)
@@ -69,19 +77,20 @@ var migrateCmd = &cobra.Command{
 				return err
 			}
 
-			tf := transformer.NewTransformer(doc)
+			tf := transformer.NewTransformer(doc, entry, outputImageRoot, updateImage)
 			if err := tf.Transform(); err != nil {
 				return err
 			}
 
-			newHtml, err := doc.Find("body").Html()
+			newHTML, err := doc.Find("body").Html()
 			if err != nil {
 				return err
 			}
-			newHtml = strings.Replace(newHtml, "{{&lt;", "{{<", -1)
-			newHtml = strings.Replace(newHtml, "&gt;}}", ">}}", -1)
+			newHTML = strings.Replace(newHTML, "{{&lt;", "{{<", -1)
+			newHTML = strings.Replace(newHTML, "&gt;}}", ">}}", -1)
+			newHTML = strings.Replace(newHTML, "&#34;", "\"", -1)
 
-			entry.Body = newHtml
+			entry.Body = newHTML
 
 			ts := service.NewMigration(entry, outputTarget)
 			if err := ts.Execute(); err != nil {
@@ -110,4 +119,5 @@ func resolvePath(path string) (string, error) {
 func initMigrateCmd() {
 	migrateCmd.PersistentFlags().StringP("input-path", "i", "", "input movable type data file")
 	migrateCmd.PersistentFlags().StringP("output-path", "o", "", "output hugo data directory")
+	migrateCmd.PersistentFlags().BoolP("update-image", "u", false, "update image file")
 }

@@ -16,19 +16,21 @@ type Migration interface {
 }
 
 type MigrationImpl struct {
-	entry         *movabletype.Entry
-	outputDirRoot string
+	entry           *movabletype.Entry
+	outputDirRoot   string
+	outputEntryRoot string
 }
 
 func NewMigration(entry *movabletype.Entry, outputDirRoot string) Migration {
 	return &MigrationImpl{
-		entry:         entry,
-		outputDirRoot: outputDirRoot,
+		entry:           entry,
+		outputDirRoot:   outputDirRoot,
+		outputEntryRoot: fmt.Sprintf("%s/content/post/entry", outputDirRoot),
 	}
 }
 
 func (s *MigrationImpl) Execute() error {
-	outpath := filepath.Join(s.outputDirRoot, s.OutputFilePath())
+	outpath := filepath.Join(s.outputEntryRoot, s.OutputFilePath())
 
 	page := hugo.CreateHugoPage(s.entry)
 	content, err := page.Render()

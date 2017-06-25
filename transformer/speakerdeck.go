@@ -12,8 +12,6 @@ var (
 	speakerdeckURLRegex = regexp.MustCompile(`^\/\/speakerdeck.com\/player\/(\w+)$`)
 )
 
-//
-
 type SpeakerdeckTransformer struct {
 	doc *goquery.Document
 }
