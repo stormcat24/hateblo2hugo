@@ -38,6 +38,7 @@ func NewTransformer(doc *goquery.Document, entry *movabletype.Entry, outputImage
 			&HatenaPhotolifeTransformer{doc, entry, outputImageRoot, updateImage},
 			&TweetTransformer{doc},
 			&SpeakerdeckTransformer{doc},
+			&EmbedLinkTransformer{doc},
 		},
 	}
 }
