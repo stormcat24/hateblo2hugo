@@ -89,6 +89,7 @@ var migrateCmd = &cobra.Command{
 			newHTML = strings.Replace(newHTML, "{{&lt;", "{{<", -1)
 			newHTML = strings.Replace(newHTML, "&gt;}}", ">}}", -1)
 			newHTML = strings.Replace(newHTML, "&#34;", "\"", -1)
+			newHTML = strings.Replace(newHTML, "&gt;", ">", -1)
 
 			entry.Body = newHTML
 
