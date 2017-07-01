@@ -26,7 +26,7 @@ func (t *EmbedLinkTransformer) Transform() error {
 			if len(tokens) == 3 {
 				html := fmt.Sprintf(`
 <div class="github-card" data-user="%s" data-repo="%s" data-width="400" data-height="" data-theme="default"></div>
-<script src="//cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
+<script src="https://cdn.jsdelivr.net/github-cards/latest/widget.js"></script>
 `, tokens[1], tokens[2])
 				s.ReplaceWithHtml(html)
 				fmt.Println(html)
