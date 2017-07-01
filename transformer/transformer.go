@@ -39,6 +39,7 @@ func NewTransformer(doc *goquery.Document, entry *movabletype.Entry, outputImage
 			&TweetTransformer{doc},
 			&SpeakerdeckTransformer{doc},
 			&EmbedLinkTransformer{doc},
+			&SyntaxTransformer{doc},
 		},
 	}
 }
