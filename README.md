@@ -32,7 +32,12 @@ $ hateblo2hugo migrate -i ~/your_path/your_hatenablog.export.txt -o ~/your_path/
 ### Migration Features
 
 * Remove Hatena Keyword link
-* TBA
+* Download images from hatena photo life, and locate files to `{blog_dir}static/images` directory.
+* Embed contents
+    * Tweet
+    * Speakerdeck
+    * General links
+* Code syntax
 
 License
 ===
