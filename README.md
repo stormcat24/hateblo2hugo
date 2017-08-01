@@ -32,12 +32,16 @@ $ hateblo2hugo migrate -i ~/your_path/your_hatenablog.export.txt -o ~/your_path/
 ### Migration Features
 
 * Remove Hatena Keyword link
-* Download images from hatena photo life, and locate files to `{blog_dir}static/images` directory.
+* Download images from hatena photo life, and locate files to `{blog_dir}/static/images` directory.
 * Embed contents
     * Tweet
     * Speakerdeck
     * General links
 * Code syntax
+
+### Example using hateblog2hugo
+
+* [http://stormcat.hatenablog.com](https://stormcat.hatenablog.com) to [https://blog.stormcat.io](https://blog.stormcat.io)
 
 License
 ===
