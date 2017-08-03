@@ -41,7 +41,7 @@ $ hateblo2hugo migrate -i ~/your_path/your_hatenablog.export.txt -o ~/your_path/
 
 ### Example using hateblog2hugo
 
-* [http://stormcat.hatenablog.com](https://stormcat.hatenablog.com) to [https://blog.stormcat.io](https://blog.stormcat.io)
+* [http://stormcat.hatenablog.com](http://stormcat.hatenablog.com) to [https://blog.stormcat.io](https://blog.stormcat.io)
 
 License
 ===
