@@ -37,6 +37,7 @@ $ hateblo2hugo migrate -i ~/your_path/your_hatenablog.export.txt -o ~/your_path/
     * Tweet
     * Speakerdeck
     * General links
+    * GitHub Repository (use [lepture/github-cards](https://github.com/lepture/github-cards) )
 * Code syntax
 
 ### Example using hateblog2hugo
